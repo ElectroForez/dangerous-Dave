@@ -16,19 +16,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameView extends View implements View.OnTouchListener {
-    Bitmap tiles;
-    Bitmap playerTiles;
-    Bitmap level1Background;
-    Bitmap level1Floor;
-    Bitmap playerImage;
-    GameObject player;
+    Player player;
     GameWorld world;
     Timer timer;
-
-    public int pxFromDp(final Context context, int dp) {
-        return (int) (dp * context.getResources().getDisplayMetrics().density);
-    }
-
+    long counter = 0;
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         int height = this.getHeight();
@@ -66,6 +57,8 @@ public class GameView extends View implements View.OnTouchListener {
             a.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    if (counter++ % 25 == 0)
+                        player.idle();
                     GameView.this.invalidate();
                 }
             });
@@ -74,31 +67,38 @@ public class GameView extends View implements View.OnTouchListener {
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        tiles = BitmapFactory.decodeResource(getResources(), R.drawable.egatiles);
-        playerTiles = BitmapFactory.decodeResource(getResources(), R.drawable.s_dave_fixed);
-        int x = pxFromDp(context, 0);
-        int y = pxFromDp(context, 179);
-        int s = pxFromDp(context, 16);
-        level1Background = Bitmap.createBitmap(tiles, x, y, s, s);
-
-        level1Floor = Bitmap.createBitmap(tiles,
-                pxFromDp(context, 192),
-                pxFromDp(context, 48),
-                s,
-                s
-        );
-
-        playerImage = Bitmap.createBitmap(playerTiles,
-                pxFromDp(context, 192),
-                pxFromDp(context, 32),
-                pxFromDp(context, 32),
-                pxFromDp(context, 32)
-        );
-
-        player = new GameObject(playerImage, 100, 500);
-        world = new GameWorld(level1Background, level1Floor);
-        world.addObject(player);
-
+        GameWorldLoader loader = new GameWorldLoader(context);
+        String level[] = {
+                "===================================",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|             D                   |",
+                "|=================================|",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|                                 |",
+                "|          D            D         |",
+                "|=================================|",
+                "|                                 |",
+                "| P                               |",
+                "===================================",
+        };
+        world = loader.load(level);
+        player = world.getPlayer();
         timer = new Timer();
         UpdateGameViewTask task = new UpdateGameViewTask(context);
         final int FPS = 40;

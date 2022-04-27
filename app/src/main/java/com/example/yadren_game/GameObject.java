@@ -3,13 +3,18 @@ package com.example.yadren_game;
 import android.graphics.Bitmap;
 
 public class GameObject {
-    private Bitmap image;
-    private int x, y;
+    protected Bitmap[] image;
+    protected int x, y;
+    protected int imageIndex;
 
-    public GameObject(Bitmap image, int x, int y) {
+    public GameObject(Bitmap image[], int x, int y) {
         this.image = image;
         this.x = x;
         this.y = y;
+    }
+
+    public GameObject(Bitmap image, int x, int y) {
+        this(new Bitmap[] { image}, x, y);
     }
 
     public int getX() {
@@ -26,7 +31,7 @@ public class GameObject {
     }
 
     public Bitmap getImage() {
-        return this.image;
+        return this.image[0];
     }
 
 }
