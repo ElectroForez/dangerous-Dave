@@ -30,15 +30,15 @@ public class GameView extends View implements View.OnTouchListener {
         int dist = 10;
 
         if (y < (height / 3)) {
-            player.move(0, -dist);
+            world.movePlayer(0, -dist);
         } else if (y > (height - (height / 3))) {
-            player.move(0, dist);
+            world.movePlayer(0, dist);
         }
 
         if (x < (width / 3)) {
-            player.move(-dist, 0);
+            world.movePlayer(-dist, 0);
         } else if ( x > (width - (width / 3))) {
-            player.move(dist, 0);
+            world.movePlayer(dist, 0);
         }
 
         return true;
@@ -70,32 +70,37 @@ public class GameView extends View implements View.OnTouchListener {
         GameWorldLoader loader = new GameWorldLoader(context);
         String level[] = {
                 "===================================",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|             D                   |",
-                "|=================================|",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|                                 |",
-                "|          D            D         |",
-                "|=================================|",
-                "|                                 |",
-                "| P                               |",
-                "===================================",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[             D                  ]",
+                "[================================]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[          D            D        ]",
+                "[================================]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[                                ]",
+                "[ P                              ]",
+                "==================================",
         };
         world = loader.load(level);
         player = world.getPlayer();

@@ -10,8 +10,8 @@ public class Player extends GameObject{
         RUNNING_RIGHT
     }
     private State state = State.RUNNING_RIGHT;
-    public Player (Bitmap[] image, int x, int y){
-        super(image, x, y);
+    public Player (Bitmap[] image, int x, int y, int width, int height){
+        super(image, x, y, width, height);
         imageIndex = 1;
     }
 
@@ -20,8 +20,8 @@ public class Player extends GameObject{
 
         switch (state) {
             case RUNNING_RIGHT:
+                imageIndex++;
                 if (imageIndex == 4) {
-                    imageIndex++;
                     imageIndex = 1;
                 }
 
@@ -31,9 +31,9 @@ public class Player extends GameObject{
                 }
                 break;
             case RUNNING_LEFT:
-                if (imageIndex == 12) {
-                    imageIndex++;
-                    imageIndex = 8;
+                imageIndex++;
+                if (imageIndex == 13) {
+                    imageIndex = 9;
                 }
                 if (dx > 0) {
                     state = State.RUNNING_RIGHT;
@@ -48,7 +48,7 @@ public class Player extends GameObject{
                 }
                 else if (dx < 0) {
                     state = State.RUNNING_LEFT;
-                    imageIndex = 8;
+                    imageIndex = 9;
                 }
         }
     }
@@ -60,7 +60,7 @@ public class Player extends GameObject{
                 state = State.IDLE_RIGHT;
                 break;
             case RUNNING_LEFT:
-                imageIndex = 7;
+                imageIndex = 8;
                 state = State.IDLE_LEFT;
                 break;
         }
