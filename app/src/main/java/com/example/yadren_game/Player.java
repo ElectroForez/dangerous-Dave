@@ -15,6 +15,12 @@ public class Player extends GameObject{
         imageIndex = 1;
     }
 
+    public void offsetPosition(int dx, int dy) {
+        x += dx;
+        y += dy;
+        hitbox.offset(dx, dy);
+    }
+
     public void move(int dx, int dy) {
         super.move(dx, dy);
 

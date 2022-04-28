@@ -29,7 +29,7 @@ public class GameWorld {
         return this.player;
     }
 
-    public ArrayList<GameObject> getHit(GameObject object){
+    public ArrayList<GameObject> getHits(GameObject object){
         Rect objHitbox = object.getHitbox();
         ArrayList<GameObject> result = new ArrayList<>();
         for (GameObject obj : objects) {
@@ -43,13 +43,15 @@ public class GameWorld {
 
     public void movePlayer(int dx, int dy) {
         player.move(dx, dy);
-        ArrayList<GameObject> hits = getHit(player);
+        ArrayList<GameObject> hits = getHits(player);
         for (GameObject hit : hits){
-            if (hit instanceof Floor) {
-                player.move(-dx, -dy);
+            if ((hit instanceof Floor) || (hit instanceof Wall)) {
+                player.offsetPosition(-dx, -dy);
                 break;
             }
         }
+
+
     }
 
     public void draw(Canvas canvas) {
